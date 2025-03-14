@@ -1,10 +1,17 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import AuthorViewSet
+from django.urls import path
+from .views import AuthorListCreateView, AuthorRetrieveUpdateDestroyView
 
-router = DefaultRouter()
-router.register(r'authors', AuthorViewSet, basename='author')
+app_name = "author"
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path(
+        "authors/",
+        AuthorListCreateView.as_view(),
+        name="manage-list"
+    ),
+    path(
+        "authors/<int:pk>/",
+        AuthorRetrieveUpdateDestroyView.as_view(),
+        name="author-detail"
+    ),
 ]
